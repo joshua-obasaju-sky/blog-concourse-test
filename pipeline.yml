@@ -21,7 +21,7 @@ resources:
   check_every: 1h
   # webhook_token: ((concourse-shared-recipes-webhook-token))
   source:
-    uri: https://github.com/joshua-obasaju-sky/blog-concourse-test
+    uri: https://github.com/sky-uk/joshua-concourse-blog-test
     <<: *git_pat_token_details
 
 # - name: pull-request
@@ -39,7 +39,8 @@ jobs:
   - get: concourse-blog-test
     trigger: true
   # - put: pull-request
-  #   params:
+  #   params:clear
+
   #     path: pull-request
   #     status: pending
   - task: unit-test # The series of tasks that contain the logic to run your tests and CI scripts. A simple example is shown below.
