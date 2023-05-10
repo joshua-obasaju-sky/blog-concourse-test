@@ -3,6 +3,7 @@ package db
 import (
 	"blog/pb"
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/go-pg/pg/v10"
@@ -19,10 +20,11 @@ type DB struct {
 }
 
 func NewDB() *DB{
+	config := GetConfig()
   db := pg.Connect(&pg.Options{
-    Addr:     ":5432",
-    User:     "postgres",
-    Password: "1234",
+    Addr:     fmt.Sprintf(":%s", config.Port),
+    User:    config.Username,
+    Password: config.Password,
     Database: "blog-pract",
 })
 

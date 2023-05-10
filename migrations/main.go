@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/db"
 	"flag"
 	"fmt"
 	"os"
@@ -25,11 +26,12 @@ Usage:
 func main() {
 	flag.Usage = usage
 	flag.Parse()
+	config := db.GetConfig()
 
 	db := pg.Connect(&pg.Options{
-	Addr:     ":5432",
-    User:     "postgres",
-    Password: "1234",
+	Addr:     fmt.Sprintf(":%s", config.Port),
+    User:    config.Username,
+    Password: config.Password,
     Database: "blog-pract",
 	})
 
