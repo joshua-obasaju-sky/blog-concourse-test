@@ -1,8 +1,12 @@
 # Use YAML anchors to keep us DRY in our Tasks/Jobs
-git_resource_params: &git_resource_params
-  branch: main
-  username: ((github_username))
-  password: ((github_pat))
+# git_resource_params: &git_resource_params
+#   branch: main
+#   username: ((github_username))
+#   password: ((github_pat))
+
+git_pat_token_details: &git_pat_token_details
+  username: ((cec_concourse_team_creation_git_hub_username)) # Value dynamically retrieved from AWS Secrets Manager
+  password: ((cec_concourse_team_creation_git_hub_pat)) # Value dynamically retrieved from AWS Secrets Manager
 
 resource_types:
 - name: pull-request
@@ -18,16 +22,16 @@ resources:
   webhook_token: ((concourse-shared-recipes-webhook-token))
   source:
     uri: https://github.com/joshua-obasaju-sky/blog-concourse-test
-    <<: *git_resource_params
+    <<: *git_pat_token_details
 
-- name: pull-request
-  type: pull-request
-  icon: git
-  check_every: 1h
-  webhook_token: ((concourse-shared-recipes-webhook-token))
-  source:
-    repository: sky-uk/concourse-shared-recipes
-    access_token: ((git_hub_pat))
+# - name: pull-request
+#   type: pull-request
+#   icon: git
+#   check_every: 1h
+#   webhook_token: ((concourse-shared-recipes-webhook-token))
+#   source:
+#     repository: sky-uk/concourse-shared-recipes
+#     access_token: ((git_hub_pat))
 
 jobs:
 - name: verify-pull-request
