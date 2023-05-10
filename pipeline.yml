@@ -19,7 +19,7 @@ resources:
   type: git
   icon: github
   check_every: 1h
-  webhook_token: ((concourse-shared-recipes-webhook-token))
+  # webhook_token: ((concourse-shared-recipes-webhook-token))
   source:
     uri: https://github.com/joshua-obasaju-sky/blog-concourse-test
     <<: *git_pat_token_details
@@ -47,7 +47,7 @@ jobs:
       platform: linux
       image_resource:
         type: docker-image
-        source: {repository: alpine/git, tag: "latest"} # Specify a Docker image that contains what we need to run our tests
+        source: {repository: python } # Specify a Docker image that contains what we need to run our tests
       inputs:
         - name: concourse-blog-test
       run:
