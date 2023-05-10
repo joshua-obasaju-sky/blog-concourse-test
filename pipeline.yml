@@ -21,7 +21,7 @@ resources:
   check_every: 1h
   # webhook_token: ((concourse-shared-recipes-webhook-token))
   source:
-    uri: https://github.com/sky-uk/joshua-concourse-blog-test
+    uri: https://github.com/sky-uk/test-joshua-concourse
     <<: *git_pat_token_details
 
 # - name: pull-request
