@@ -8,11 +8,11 @@ git_pat_token_details: &git_pat_token_details
   username: ((cec_concourse_team_creation_git_hub_username)) # Value dynamically retrieved from AWS Secrets Manager
   password: ((cec_concourse_team_creation_git_hub_pat)) # Value dynamically retrieved from AWS Secrets Manager
 
-resource_types:
-- name: pull-request
-  type: registry-image
-  source:
-    repository: teliaoss/github-pr-resource
+# resource_types:
+# - name: pull-request
+#   type: registry-image
+#   source:
+#     repository: teliaoss/github-pr-resource
 
 resources:
 - name: concourse-blog-test
@@ -34,7 +34,7 @@ resources:
 #     access_token: ((git_hub_pat))
 
 jobs:
-- name: verify-pull-request
+- name: concourse-blog-test
   plan:
   - get: concourse-blog-test
     trigger: true
