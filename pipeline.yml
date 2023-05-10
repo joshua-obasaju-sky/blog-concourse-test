@@ -1,0 +1,77 @@
+# Use YAML anchors to keep us DRY in our Tasks/Jobs
+git_resource_params: &git_resource_params
+  branch: main
+  username: ((github_username))
+  password: ((github_pat))
+
+resource_types:
+- name: pull-request
+  type: registry-image
+  source:
+    repository: teliaoss/github-pr-resource
+
+resources:
+- name: concourse-blog-test
+  type: git
+  icon: github
+  check_every: 1h
+  webhook_token: ((concourse-shared-recipes-webhook-token))
+  source:
+    uri: https://github.com/joshua-obasaju-sky/blog-concourse-test
+    <<: *git_resource_params
+
+- name: pull-request
+  type: pull-request
+  icon: git
+  check_every: 1h
+  webhook_token: ((concourse-shared-recipes-webhook-token))
+  source:
+    repository: sky-uk/concourse-shared-recipes
+    access_token: ((git_hub_pat))
+
+jobs:
+- name: verify-pull-request
+  plan:
+  - get: pull-request
+    trigger: true
+  - put: pull-request
+    params:
+      path: pull-request
+      status: pending
+  - task: unit-test # The series of tasks that contain the logic to run your tests and CI scripts. A simple example is shown below.
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: alpine/git, tag: "latest"} # Specify a Docker image that contains what we need to run our tests
+      inputs:
+        - name: pull-request
+      run:
+        path: /bin/sh
+        args:
+          - -xce
+          - |
+            cd pull-request
+            git log --graph --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s" > log.txt
+            cat log.txt
+    on_failure: # Runs when the task fails
+      put: update-status # Alias the pull-request so we can use `skip_download` without affecting subsequent tasks that rely on the Github repo
+      resource: pull-request
+      get_params: {skip_download: true} # Don't run the implicit get when pushing a status update
+      params:
+        path: pull-request
+        status: failure
+    on_success: # Runs when the task is successful
+      put: update-status
+      resource: pull-request
+      get_params: {skip_download: true}
+      params:
+        path: pull-request
+        status: success
+
+- name: set-pipeline
+  plan:
+  - get: concourse-blog-test
+    trigger: true
+  - set_pipeline: concourse-blog-test
+    file: concourse/pipelines/pipeline.yml
