@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+
+option go_package = "./;pb";
+
+message CreatePostRequest {
+  string content = 1;
+  int32 authorId = 2;
+}
+
+message CreatePostResponse {
+  string postId = 1;
+}
+
+message Post {
+  string content = 1;
+  int32 authorId = 2;
+  string id = 3;
+  google.protobuf.Timestamp date = 4;
+}
+
+message GetPostRequest {
+  string ID = 1;
+}
+
+service Blog {
+  rpc CreatePost (CreatePostRequest) returns (CreatePostResponse) {}
+  rpc GetPost (GetPostRequest) returns (Post) {}
+  rpc GetPosts (GetPostsRequest) returns (GetPostsResponse) {}
+
+}
+
+message GetPostsRequest {}
+
+message GetPostsResponse {
+  repeated Post posts = 1;
+}
+
