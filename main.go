@@ -6,8 +6,6 @@ import (
 	"blog/server"
 )
 
-
-
 func main(){
 	log.Fatal(server.StartServer())
 }

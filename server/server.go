@@ -12,9 +12,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-
-
-
 type Server struct {
  pb.UnimplementedBlogServer
  DBConn db.DBInterface
