@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: blog-concourse-test
+  description: Blog Concourse Test
+  title: Test Concourse
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: sky-uk/blog-concourse-test
+spec:
+  lifecycle: experimental
+  system: sky-uk/cloud-enablement-centre
+  type: service
+  owner: sky-uk/cloud-enablement-centre
+
