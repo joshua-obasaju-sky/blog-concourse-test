@@ -9,7 +9,7 @@ metadata:
     github.com/project-slug: sky-uk/blog-concourse-test
 spec:
   lifecycle: experimental
-  system: sky-uk/cloud-enablement-centre
+  system: cloud-enablement-centre
   type: service
-  owner: sky-uk/cloud-enablement-centre
+  owner: sky-uk-test-org/cec-gigafactory
 
