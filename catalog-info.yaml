@@ -10,6 +10,6 @@ metadata:
 spec:
   lifecycle: experimental
   system: cloud-enablement-centre
-  type: service
+  type: application
   owner: sky-uk-test-org/cec-gigafactory
 
