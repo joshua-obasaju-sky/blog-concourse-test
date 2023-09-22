@@ -6,7 +6,7 @@ metadata:
   title: Test Concourse
   annotations:
     backstage.io/techdocs-ref: dir:.
-    github.com/project-slug: sky-uk/blog-concourse-test
+    github.com/project-slug: joshua-obasaju-sky/blog-concourse-test
 spec:
   lifecycle: experimental
   system: cloud-enablement-centre
